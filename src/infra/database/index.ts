@@ -8,8 +8,8 @@ const dataSource = new DataSource({
   database: "captacao_leads",
   synchronize: false,
   logging: false,
-  entities: [],
-  migrations: ["src/infra/database/migrations/*ts"],
+  entities: ["src/modules/**/infra/entities/*.ts"],
+  migrations: ["src/infra/database/migrations/*.ts"],
 });
 
 export function createConnection(host = "localhost"): Promise<DataSource> {

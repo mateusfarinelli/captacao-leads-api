@@ -3,21 +3,20 @@ import { IntentionRepositoryInterface } from '../../repositories/IntentionReposi
 import { Intention } from "../../infra/entities/Intention";
 
 interface RequestInterface {
-  zipcode_start: string;
-  zipcode_end: string;
+  intention_id: string;
+  lead_id: string;
 }
 
 @injectable()
-class CreateIntentionUseCase {
+class UpdateIntentionUseCase {
   constructor(
     @inject("IntentionsRepository")
     private itentionRepository: IntentionRepositoryInterface
   ){}
 
-  async execute({ zipcode_start, zipcode_end }: RequestInterface): Promise<Intention> {
+  async execute({ intention_id, lead_id }: RequestInterface): Promise<void> {
     try {
-      const intention = await this.itentionRepository.create({zipcode_start, zipcode_end});
-        return intention;
+      await this.itentionRepository.update(intention_id, lead_id);
 
     } catch (error: any) {
         throw new Error(error);
@@ -26,4 +25,4 @@ class CreateIntentionUseCase {
 
 }
 
-export { CreateIntentionUseCase }
+export { UpdateIntentionUseCase }

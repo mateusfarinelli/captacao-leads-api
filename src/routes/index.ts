@@ -5,6 +5,6 @@ import { leadRoutes } from "./lead.routes";
 const routes = Router();
 
 routes.use("/intention", intentionRoutes);
-routes.use("lead", leadRoutes)
+routes.use("/lead", leadRoutes)
 
 export { routes };

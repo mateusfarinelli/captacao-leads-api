@@ -1,8 +1,9 @@
-import "reflect-metadata"
+import "reflect-metadata";
 import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import dataSource  from "./infra/database";
-import { routes } from "./routes"
+import "../src/shared/container";
+import { routes } from "./routes";
 
 /**
  * Preparando rota do swagger
@@ -12,7 +13,7 @@ import { routes } from "./routes"
 dataSource.initialize().then(() => {
   const app = express();
   app.use(express.json());
-  app.use(cors({ origin: true, credentials: true }));
+  app.use(cors());
   app.use(routes)
 
   return app.listen(3000, () => {

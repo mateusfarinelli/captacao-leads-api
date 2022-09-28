@@ -5,9 +5,9 @@ import { LeadRepositoryInterface } from '../../modules/leads/repositories/LeadRe
 import { LeadRepository } from '../../modules/leads/infra/repositories/LeadRepository';
 
 container.registerSingleton<IntentionRepositoryInterface>(
-    "IntentionRepository", IntentionRepository
+    "IntentionsRepository", IntentionRepository
 )
 
 container.registerSingleton<LeadRepositoryInterface>(
-    "LeadRepositoryI", LeadRepository
+    "LeadsRepository", LeadRepository
 )

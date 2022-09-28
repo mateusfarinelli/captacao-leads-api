@@ -1,5 +1,5 @@
 import { CreateIntentionDTO, IntentionRepositoryInterface } from "../../repositories/IntentionRepositoryInterface";
-import dataSource from "infra/database";
+import dataSource from "../../../../infra/database";
 import { Repository } from "typeorm";
 import { Intention } from "../entities/Intention";
 
@@ -27,7 +27,7 @@ class IntentionRepository implements IntentionRepositoryInterface {
     return intention;
   }
 
-  async update(intention_id: string, lead_id: string): Promise<void> {
+  async update( intention_id: string, lead_id: string): Promise<void> {
     await this.repository
       .createQueryBuilder()
       .update()

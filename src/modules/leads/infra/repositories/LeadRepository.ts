@@ -1,5 +1,5 @@
-import { CreateLeadDTO, LeadRepositoryInterface } from "@modules/leads/repositories/LeadRepositoryInterface";
-import dataSource from "infra/database";
+import { CreateLeadDTO, LeadRepositoryInterface } from "../../../leads/repositories/LeadRepositoryInterface";
+import dataSource from "../../../../infra/database";
 import { Repository } from "typeorm";
 import { Lead } from "../entities/Lead";
 

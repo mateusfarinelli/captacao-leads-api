@@ -1,4 +1,4 @@
-import { Lead } from '@modules/leads/infra/entities/Lead';
+import { Lead } from '../../../leads/infra/entities/Lead';
 import {
   Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn,
 } from 'typeorm';
