@@ -7,16 +7,16 @@ import { v4 as uuidV4 } from 'uuid';
 @Entity('leads')
 class Lead {
   @PrimaryColumn()
-    lead_id!: string;
+    lead_id: string;
 
   @Column()
-    name!: string;
+    name: string;
 
   @Column()
-    email!: string;
+    email: string;
   
   @CreateDateColumn()
-    created_at!: Date;
+    created_at: Date;
 
   constructor() {
     if (!this.lead_id) {

@@ -6,7 +6,8 @@ interface CreateLeadDTO {
 }
 
 interface LeadRepositoryInterface{
-  findById: (Lead_id: string) => Promise<Lead>;
+  findById: (email: string) => Promise<Lead>;
+  findByEmail: (email: string) => Promise<Lead>;
   create: ({ name, email }: CreateLeadDTO) => Promise<Lead>;
 }
 

@@ -9,15 +9,21 @@ class LeadRepository implements LeadRepositoryInterface {
   constructor(){
     this.repository = dataSource .getRepository(Lead)
   }
-  
+
   async findById (lead_id: string): Promise<Lead>{
     const lead = await this.repository.findOneBy({ lead_id });
 
-    return lead!;
+    return lead;
+  }
+  
+  async findByEmail (email: string): Promise<Lead>{
+    const lead = await this.repository.findOneBy({ email });
+
+    return lead;
   }
 
   async create ({ name, email }: CreateLeadDTO) : Promise<Lead>{
-    const user = await this.repository.create({name, email});
+    const user = await this.repository.create({ name, email });
 
     await this.repository.save(user);
 

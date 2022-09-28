@@ -1,3 +1,4 @@
+import { AppError } from './../../../../shared/errors/AppError';
 import { injectable, inject } from 'tsyringe';
 import { IntentionRepositoryInterface } from '../../repositories/IntentionRepositoryInterface';
 import { Intention } from "../../infra/entities/Intention";
@@ -15,13 +16,17 @@ class CreateIntentionUseCase {
   ){}
 
   async execute({ zipcode_start, zipcode_end }: RequestInterface): Promise<Intention> {
-    try {
-      const intention = await this.itentionRepository.create({zipcode_start, zipcode_end});
-        return intention;
+    if (zipcode_start && zipcode_end){
+      try {
+          const intention = await this.itentionRepository.create({zipcode_start, zipcode_end});
+          return intention;     
 
-    } catch (error: any) {
-        throw new Error(error);
-    }    
+      } catch (error: any) {
+          throw new Error(error);
+      }    
+    } else {
+      throw new AppError("Não foi possível criar a intention, falta parâmetros na sua requisição", 500)
+    }
   }
 
 }
