@@ -1,4 +1,3 @@
-import { CreateLead1664304520527 } from './migrations/1664304520527-CreateLead';
 import { DataSource } from "typeorm";
 
 const dataSource = new DataSource({
