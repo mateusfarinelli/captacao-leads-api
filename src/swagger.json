@@ -45,14 +45,14 @@
          }
       }
     },
-    "/intention/{lead_id}": {
+    "/intention/{intention_id}": {
       "put": {
         "tags": ["Update Intention"],
         "summary": "Update lead_id field on intention",
          "description": "Update lead_id field on intention",
          "parameters": [
           {
-            "name": "lead_id",
+            "name": "intention_id",
             "in": "path",
             "description": "Lead ID",
             "required": true,
