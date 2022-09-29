@@ -33,27 +33,31 @@ describe("Update Intention", () => {
   it("should be able update a lead_id field on intention", async () => {
     const { intention_id } = intentionRepositoryInMemory.intentions[0]
     const { lead_id } = leadRepositoryInMemory.leads[0];
-    const intention = await updateIntentionUseCase.execute({ intention_id: intention_id, lead_id: lead_id});
+    
+    await updateIntentionUseCase.execute({ intention_id: intention_id, lead_id: lead_id});
 
     const updatedIntention = intentionRepositoryInMemory.findById(intention_id);
 
     expect(lead_id).toEqual((await updatedIntention).lead_id);
   })
 
-  // it("not should be able create an lead without zipcode_start or zipcode_end paramater", async () => {
-  //   const intentionWithoutZipcodeStart = {
-  //     zipcode_start: null,
-  //     zipcode_end: "87654321"
-  //   };
+  it("not should be able update an intention without lead_id or intention_id paramaters", async () => {
+    const { intention_id } = intentionRepositoryInMemory.intentions[0]
+    const { lead_id } = leadRepositoryInMemory.leads[0];
 
-  //   const intentionWithoutZipcodeEnd = {
-  //     zipcode_start: "12345678",
-  //     zipcode_end: null
-  //   };
+    const requestDataWithOutIntentionId = {
+      intention_id: null,
+      lead_id: lead_id
+    }
 
-  //   expect(async () => {
-  //     await createIntentionUseCase.execute({ zipcode_start: intentionWithoutZipcodeStart.zipcode_start, zipcode_end: intentionWithoutZipcodeStart.zipcode_end });
-  //     await createIntentionUseCase.execute({ zipcode_start: intentionWithoutZipcodeEnd.zipcode_start, zipcode_end: intentionWithoutZipcodeEnd.zipcode_end })
-  //   }).rejects.toBeInstanceOf(AppError);
-  // })
+    const requestDataWithOutLeadId = {
+      intention_id: intention_id,
+      lead_id: null
+    }
+
+    expect(async () => {
+      await updateIntentionUseCase.execute({ intention_id: requestDataWithOutIntentionId.intention_id, lead_id: requestDataWithOutIntentionId.lead_id });
+      await updateIntentionUseCase.execute({ intention_id: requestDataWithOutLeadId.intention_id, lead_id: requestDataWithOutLeadId.lead_id })
+    }).rejects.toBeInstanceOf(AppError);
+  })
 })
