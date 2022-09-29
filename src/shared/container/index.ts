@@ -1,4 +1,5 @@
 import { container } from 'tsyringe';
+import '../providers/'
 import { IntentionRepository } from '../../modules/intentions/infra/repositories/IntentionRepository';
 import { IntentionRepositoryInterface } from '../../modules/intentions/repositories/IntentionRepositoryInterface';
 import { LeadRepositoryInterface } from '../../modules/leads/repositories/LeadRepositoryInterface';

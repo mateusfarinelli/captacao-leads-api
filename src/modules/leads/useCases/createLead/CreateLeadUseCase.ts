@@ -1,7 +1,9 @@
-import { AppError } from './../../../../shared/errors/AppError';
 import { injectable, inject } from 'tsyringe';
+import { resolve } from "path";
 import { LeadRepositoryInterface } from '../../../leads/repositories/LeadRepositoryInterface';
 import { Lead } from '../../../leads/infra/entities/Lead';
+import { MailProviderInterface } from './../../../../shared/providers/MailProvider/MailProviderInterface';
+import { AppError } from './../../../../shared/errors/AppError';
 
 interface RequestInterface {
   name: string;
@@ -12,7 +14,9 @@ interface RequestInterface {
 class CreateLeadUseCase {
   constructor(
     @inject("LeadsRepository")
-    private leadRepository: LeadRepositoryInterface
+    private leadRepository: LeadRepositoryInterface,
+    @inject("MailProvider")
+    private mailProvider: MailProviderInterface, 
   ){}
 
   async execute({ name, email }: RequestInterface): Promise<Lead> {
@@ -21,11 +25,25 @@ class CreateLeadUseCase {
     if(!lead){     
       try {
         lead = await this.leadRepository.create({ name, email });
-        return lead
+
+        const emailTemplatePath = resolve(__dirname, "..","..","..","..","shared","views","email","email.hbs");
+
+        if(!lead){
+          throw new AppError("Usuário não existe!", 404);
+        }
+        
+        const variables = {
+          name: lead.name
+        }
+
+        await this.mailProvider.sendMail(email, "Obrigado pelo interesse na SmartEnvios", variables, emailTemplatePath)
+
       } catch (error) {
         throw new AppError("Não foi possível criar o lead, falta parâmetros na sua requisição", 500)
       }
     } 
+    
+    return lead
   }    
 
 }
