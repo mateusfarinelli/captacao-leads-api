@@ -36,20 +36,33 @@
            }
          },
          "responses": {
-           "201": {
+           "200": {
              "description": "Created"
            },
            "500": {
-             "description": "Não foi possível criar a intention, falta parâmetros na sua requisição"
+             "description": "Falta parâmetros na sua requisição"
            }
          }
       }
     },
-    "/intention/:lead_id": {
+    "/intention/{lead_id}": {
       "put": {
-        "tags": ["Update intention"],
-        "summary": "Update intention with a lead_id",
-         "description": "Update intention with a lead_id",
+        "tags": ["Update Intention"],
+        "summary": "Update lead_id field on intention",
+         "description": "Update lead_id field on intention",
+         "parameters": [
+          {
+            "name": "lead_id",
+            "in": "path",
+            "description": "Lead ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "123e4567-e89b-12d3-a456-426614174000"            
+          }
+        ],
          "requestBody": {
            "content": {
              "application/json": {
@@ -68,13 +81,16 @@
            }
          },
          "responses": {
-           "201": {
-             "description": "Created"
+           "200": {
+             "description": "OK"
            },
+           "404": {
+            "description": "Parâmetros fornecidos não encontrados"
+          },
            "500": {
-             "description": "Não foi possível alterar a intention, falta parâmetros na sua requisição"
-           }
-         }
+             "description": "Falta parâmetros na sua requisição"
+          }
+        }
       }
     },
     "/lead": {
@@ -96,11 +112,11 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Created"
           },
           "500": {
-            "description": "Não foi possível criar o lead, falta parâmetros na sua requisição"
+            "description": "Falta parâmetros na sua requisição"
           }
         }
       }
