@@ -20,25 +20,26 @@ class CreateLeadUseCase {
   ){}
 
   async execute({ name, email }: RequestInterface): Promise<Lead> {
-    let lead = email ? await this.leadRepository.findByEmail(email) : null
+    
+    if(!name || !email){
+      throw new AppError("Não foi possível criar o lead, falta parâmetros na sua requisição", 500)
+    }
+    
+    let lead = await this.leadRepository.findByEmail(email)
 
     if(!lead){     
-      try {
-        lead = await this.leadRepository.create({ name, email });
+      lead = await this.leadRepository.create({ name, email });
         
-        const emailTemplatePath = resolve(__dirname, "..","..","..","..","shared","views","email","email.hbs");
+      const emailTemplatePath = resolve(__dirname, "..","..","..","..","shared","views","email","email.hbs");
         
-        const variables = {
-          name: lead.name
-        }
-
-        await this.mailProvider.sendMail(email, "Obrigado pelo interesse na SmartEnvios", variables, emailTemplatePath)
-
-      } catch (error) {
-        throw new AppError("Não foi possível criar o lead, falta parâmetros na sua requisição", 500)
+      const variables = {
+        name: lead.name
       }
-    } 
 
+      await this.mailProvider.sendMail(email, "Obrigado pelo interesse na SmartEnvios", variables, emailTemplatePath)
+      
+    }
+    
     return lead
   }    
 

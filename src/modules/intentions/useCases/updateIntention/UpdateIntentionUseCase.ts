@@ -2,6 +2,7 @@ import { AppError } from './../../../../shared/errors/AppError';
 import { injectable, inject } from 'tsyringe';
 import { IntentionRepositoryInterface } from '../../repositories/IntentionRepositoryInterface';
 import { LeadRepositoryInterface } from '../../../leads/repositories/LeadRepositoryInterface';
+import { Intention } from '../../infra/entities/Intention';
 
 interface RequestInterface {
   intention_id: string;
@@ -17,7 +18,7 @@ class UpdateIntentionUseCase {
     private leadRepository: LeadRepositoryInterface
   ){}
 
-  async execute({ intention_id, lead_id }: RequestInterface): Promise<void> {
+  async execute({ intention_id, lead_id }: RequestInterface): Promise<Intention> {
     if(!intention_id || !lead_id){
       throw new AppError("Não foi possível alterar a intention, falta parâmetros na sua requisição", 500)    
     }
@@ -33,12 +34,10 @@ class UpdateIntentionUseCase {
       throw new AppError("Não foi possível alterar a intention, lead_id informada não existe na base de dados", 404)
     }
 
-    try {
-      await this.itentionRepository.update(intention_id, lead_id);
-  
-    } catch (error: any) {
-      throw new Error(error);
-    } 
+    const intention = await this.itentionRepository.update(intention_id, lead_id);
+
+    return intention;
+
   }
 }
 

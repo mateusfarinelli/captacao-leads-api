@@ -8,7 +8,7 @@ interface CreateIntentionDTO {
 interface IntentionRepositoryInterface{
   findById: (intention_id: string) => Promise<Intention>;
   create: ({ zipcode_start, zipcode_end }: CreateIntentionDTO) => Promise<Intention>;
-  update: (intention_id: string, lead_id: string) => Promise<void>;
+  update: (intention_id: string, lead_id: string) => Promise<Intention>;
 }
 
 export { IntentionRepositoryInterface, CreateIntentionDTO }

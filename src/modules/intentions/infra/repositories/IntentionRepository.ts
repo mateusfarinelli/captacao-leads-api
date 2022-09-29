@@ -27,7 +27,7 @@ class IntentionRepository implements IntentionRepositoryInterface {
     return intention;
   }
 
-  async update( intention_id: string, lead_id: string): Promise<void> {
+  async update( intention_id: string, lead_id: string): Promise<Intention> {
     await this.repository
       .createQueryBuilder()
       .update()
@@ -35,6 +35,10 @@ class IntentionRepository implements IntentionRepositoryInterface {
       .where("intention_id = :intention_id")
       .setParameters({ intention_id })
       .execute();
+    
+    const intention = await this.repository.findOneBy({ intention_id });
+
+    return intention;
   }
 }
 
