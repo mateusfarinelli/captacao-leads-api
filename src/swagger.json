@@ -1,0 +1,137 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Captação Lead - SmartEnvios",
+    "description": "Desafio Técnico - API para captação de Leads por intenção de frete da SmartEnvios",
+    "version": "1.0.0",
+    "contact": {
+      "email":"mateusfarinellizardo@gmail.com"
+    }
+  },
+  "paths": {
+    "/intention": {
+      "post": {
+        "tags": ["Intention"],
+        "summary": "Create a intention",
+         "description": "Create a new intention",
+         "requestBody": {
+           "content": {
+             "application/json": {
+               "schema": {
+                 "type": "object",
+                 "properties": {
+                   "name": {
+                     "type": "string"
+                   },
+                   "description": {
+                     "type": "string"
+                   }
+                 },
+                 "example": {
+                   "zipcode_start": "12345678",
+                   "zipcode_end": "87654321"
+                 }
+               }
+             }
+           }
+         },
+         "responses": {
+           "201": {
+             "description": "Created"
+           },
+           "500": {
+             "description": "Não foi possível criar a intention, falta parâmetros na sua requisição"
+           }
+         }
+      }
+    },
+    "/intention/:lead_id": {
+      "put": {
+        "tags": ["Update intention"],
+        "summary": "Update intention with a lead_id",
+         "description": "Update intention with a lead_id",
+         "requestBody": {
+           "content": {
+             "application/json": {
+               "schema": {
+                 "type": "object",
+                 "properties": {
+                   "lead_id": {
+                     "type": "string"
+                   }                   
+                 },
+                 "example": {
+                   "lead_id": "123e4567-e89b-12d3-a456-426614174000"
+                 }
+               }
+             }
+           }
+         },
+         "responses": {
+           "201": {
+             "description": "Created"
+           },
+           "500": {
+             "description": "Não foi possível alterar a intention, falta parâmetros na sua requisição"
+           }
+         }
+      }
+    },
+    "/lead": {
+      "post": {
+        "tags": ["Lead"],
+        "summary": "Create a lead",
+        "description": "Create a new lead",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Lead"
+              },
+              "example": {
+                "name": "Example Eg",
+                "email": "example@eg.com"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Não foi possível criar o lead, falta parâmetros na sua requisição"
+          }
+        }
+      }
+
+    }
+  },  
+  "definitions": {
+    "Lead": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "Intention": {
+      "type": "object",
+      "properties": {
+        "zipcode_start": {
+          "type": "string"
+        },
+        "zipcode_end": {
+          "type": "string"
+        },
+        "lead_id": {
+          "type": "string"
+        }
+      }
+    }
+  }  
+}

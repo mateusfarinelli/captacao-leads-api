@@ -6,15 +6,15 @@ import "express-async-errors";
 import "../container/";
 import { AppError } from "../errors/AppError";
 import { routes } from "../../routes";
+import swaggerUi from "swagger-ui-express";
+import swaggerFile from "../../swagger.json";
 
 const app = express();
 
 app.use(express.json());
 
-/**
- * Preparando rota do swagger
- */
-//app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(cors());
 app.use(routes);
