@@ -25,12 +25,8 @@ class CreateLeadUseCase {
     if(!lead){     
       try {
         lead = await this.leadRepository.create({ name, email });
-
+        
         const emailTemplatePath = resolve(__dirname, "..","..","..","..","shared","views","email","email.hbs");
-
-        if(!lead){
-          throw new AppError("Usuário não existe!", 404);
-        }
         
         const variables = {
           name: lead.name
@@ -42,7 +38,7 @@ class CreateLeadUseCase {
         throw new AppError("Não foi possível criar o lead, falta parâmetros na sua requisição", 500)
       }
     } 
-    
+
     return lead
   }    
 
